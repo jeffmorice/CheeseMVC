@@ -1,0 +1,26 @@
+﻿@{
+    //Enter C# code here.
+    //Layout = null;
+}
+
+@*HTML goes here*@
+
+<h1>Remove Cheeses</h1>
+
+@*<p><a asp-controller="Cheese" asp-action="Add">Add Cheese</a></p>*@
+
+@if (ViewBag.cheeses.Count == 0)
+{
+    <p>No Cheeses yet!</p>
+}
+
+    <form method="post">
+        <ul>
+            @* Checkboxes cannot pass complex objects. Wish I had known that about 2 hours ago. *@
+            @foreach (Cheese cheese in ViewBag.cheeses)
+            {
+                <li><input type="checkbox" name="selected" value="@cheese.Name"/>@cheese.Name: @cheese.Description</li>
+            }
+        </ul>
+        <input type="submit" value="Remove" />
+    </form>
