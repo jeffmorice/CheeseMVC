@@ -27,6 +27,13 @@ namespace CheeseMVC.Controllers
             return View();
         }
 
+        public IActionResult Edit(int cheeseId)
+        {
+            //ViewBag.cheeses = CheeseData.GetAll();
+            ViewBag.editCheese = CheeseData.GetById(cheeseId);
+            return View();
+        }
+
         [HttpPost]
         [Route("/cheese/add")]
         // Model binding: you can pass form data through to an object's constructor and if the input names match the the parameters in the constructor, the framework will automatically create a new object of that type. I prefer the explicit workflow as it allows me to visually track what parameters are being passed, stage by stage.
@@ -47,6 +54,16 @@ namespace CheeseMVC.Controllers
                 CheeseData.Remove(cheeseId);
             }
 
+            return Redirect("/cheese");
+        }
+
+        [HttpPost]
+        [Route("/cheese/edit")]
+        public IActionResult EditCheese(int cheeseId, string name, string description)
+        {
+            Cheese cheeseToEdit = CheeseData.GetById(cheeseId);
+            cheeseToEdit.Name = name;
+            cheeseToEdit.Description = description;
             return Redirect("/cheese");
         }
     }
