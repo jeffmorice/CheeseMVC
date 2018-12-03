@@ -19,7 +19,7 @@
             @* Checkboxes cannot pass complex objects. Wish I had known that about 2 hours ago. *@
             @foreach (Cheese cheese in ViewBag.cheeses)
             {
-                <li><input type="checkbox" name="selected" value="@cheese.Name"/>@cheese.Name: @cheese.Description</li>
+                <li><input type="checkbox" name="selected" value="@cheese.CheeseId"/>@cheese.Name: @cheese.Description</li>
             }
         </ul>
         <input type="submit" value="Remove" />

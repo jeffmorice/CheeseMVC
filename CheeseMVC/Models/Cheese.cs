@@ -7,25 +7,21 @@ namespace CheeseMVC.Models
 {
     public class Cheese
     {
-        private string name;
-        private string description;
+        public int CheeseId { get; set; }
+        private static int nextId = 1;
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        public Cheese(string pName, string pDescription)
+        public Cheese(string name, string description) : this()
         {
-            name = pName;
-            description = pDescription;
+            Name = name;
+            Description = description;
         }
 
-        public string Name
+        public Cheese()
         {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public string Description
-        {
-            get { return description; }
-            set { description = value; }
+            CheeseId = nextId;
+            nextId++;
         }
     }
 }

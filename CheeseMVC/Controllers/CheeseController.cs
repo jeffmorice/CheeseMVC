@@ -9,11 +9,9 @@ namespace CheeseMVC.Controllers
 {
     public class CheeseController : Controller
     {
-        static private List<Cheese> Cheeses = new List<Cheese>();
-
         public IActionResult Index()
         {
-           ViewBag.cheeses = Cheeses;
+           ViewBag.cheeses = CheeseData.GetAll();
 
             return View();
         }
@@ -25,37 +23,28 @@ namespace CheeseMVC.Controllers
 
         public IActionResult Remove()
         {
-            ViewBag.cheeses = Cheeses;
+            ViewBag.cheeses = CheeseData.GetAll();
             return View();
         }
 
         [HttpPost]
         [Route("/cheese/add")]
-        public IActionResult NewCheese(string name, string description)
+        // Model binding: you can pass form data through to an object's constructor and if the input names match the the parameters in the constructor, the framework will automatically create a new object of that type. I prefer the explicit workflow as it allows me to visually track what parameters are being passed, stage by stage.
+        public IActionResult NewCheese(Cheese newCheese)
         {
             //add the new cheese to my existing cheeses
-            Cheeses.Add(new Cheese(name, description));
+            CheeseData.Add(newCheese);
             return Redirect("/cheese");
         }
 
         [HttpPost]
         [Route("/cheese/remove")]
-        public IActionResult RemoveCheese(string[] selected)
+        public IActionResult RemoveCheese(int[] selected)
         {
             //remove the selected cheeses from my existing cheeses
-            foreach(string selection in selected)
+            foreach(int cheeseId in selected)
             {
-                Cheese toBeRemoved = null;
-
-                foreach (Cheese cheese in Cheeses)
-                {
-                    if (selection == cheese.Name)
-                    {
-                        toBeRemoved = cheese;
-                    }
-                }
-
-                Cheeses.Remove(toBeRemoved);
+                CheeseData.Remove(cheeseId);
             }
 
             return Redirect("/cheese");
