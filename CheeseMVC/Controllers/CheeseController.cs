@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CheeseMVC.Models;
+using CheeseMVC.ViewModels;
 
 namespace CheeseMVC.Controllers
 {
@@ -11,14 +12,15 @@ namespace CheeseMVC.Controllers
     {
         public IActionResult Index()
         {
-           ViewBag.cheeses = CheeseData.GetAll();
+           List<Cheese> cheeses = CheeseData.GetAll();
 
-            return View();
+            return View(cheeses);
         }
 
         public IActionResult Add()
         {
-            return View();
+            AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel();
+            return View(addCheeseViewModel);
         }
 
         public IActionResult Remove()
@@ -35,18 +37,28 @@ namespace CheeseMVC.Controllers
         }
 
         [HttpPost]
-        [Route("/cheese/add")]
         // Model binding: you can pass form data through to an object's constructor and if the input names match the the parameters in the constructor, the framework will automatically create a new object of that type. I prefer the explicit workflow as it allows me to visually track what parameters are being passed, stage by stage.
-        public IActionResult NewCheese(Cheese newCheese)
+        public IActionResult Add(AddCheeseViewModel addCheeseViewModel)
         {
-            //add the new cheese to my existing cheeses
-            CheeseData.Add(newCheese);
-            return Redirect("/cheese");
+            if (ModelState.IsValid)
+            {
+                Cheese newCheese = new Cheese
+                {
+                    Name = addCheeseViewModel.Name,
+                    Description = addCheeseViewModel.Description
+                };
+
+                //add the new cheese to my existing cheeses
+                CheeseData.Add(newCheese);
+                return Redirect("/cheese");
+            }
+
+            return View(addCheeseViewModel);
+            
         }
 
         [HttpPost]
-        [Route("/cheese/remove")]
-        public IActionResult RemoveCheese(int[] selected)
+        public IActionResult Remove(int[] selected)
         {
             //remove the selected cheeses from my existing cheeses
             foreach(int cheeseId in selected)
