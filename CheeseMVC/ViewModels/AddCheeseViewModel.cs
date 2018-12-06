@@ -48,5 +48,18 @@ namespace CheeseMVC.ViewModels
                 Text = CheeseType.Fake.ToString()
             });
         }
+
+        public Cheese CreateCheese(AddCheeseViewModel addCheeseViewModel)
+        {
+            Cheese newCheese = new Cheese
+            {
+                Name = addCheeseViewModel.Name,
+                Description = addCheeseViewModel.Description,
+                Type = addCheeseViewModel.Type,
+                Rating = addCheeseViewModel.Rating
+            };
+
+            return newCheese;
+        }
     }
 }
