@@ -1,18 +1,25 @@
-﻿@{
-//Layout = null;
+﻿@model CheeseMVC.ViewModels.AddEditCheeseViewModel
+
+@{
+    //Layout = null;
 }
 
-<h1>Edit Cheese @ViewBag.editCheese.Name (id = @ViewBag.editCheese.CheeseId)</h1>
+<h1>Edit Cheese @Model.CheeseToEdit.Name (id = @Model.CheeseId)</h1>
 
-<form method="post">
-    Name
+<form asp-controller="Cheese" asp-action="Edit" method="post">
+    <label asp-for="Name"></label>
     <br />
-    <input name="name" type="text" value="@ViewBag.editCheese.Name" />
+    <input asp-for="Name" value="@Model.CheeseToEdit.Name" />
     <br />
-    Description
+    <label asp-for="Description"></label>
     <br />
-    <input name="description" type="text" value="@ViewBag.editCheese.Description"/>
+    <input asp-for="Description" value="@Model.CheeseToEdit.Description" />
     <br />
-    <input name="id" type="hidden" value="ViewBag.editCheese.CheeseId" />
-    <input type="submit" value="Edit" />
+    <label asp-for="Type"></label>
+    <br />
+    <select asp-for="Type" asp-items="Model.CheeseTypes" value="@Model.CheeseToEdit.Type"></select>
+    <br />
+    <br />
+    <input asp-for="CheeseId" type="hidden" value="@Model.CheeseToEdit.CheeseId" />
+    <input type="submit" value="Edit Cheese" />
 </form>

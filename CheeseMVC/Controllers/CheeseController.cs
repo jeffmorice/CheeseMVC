@@ -31,9 +31,14 @@ namespace CheeseMVC.Controllers
 
         public IActionResult Edit(int cheeseId)
         {
-            //ViewBag.cheeses = CheeseData.GetAll();
-            ViewBag.editCheese = CheeseData.GetById(cheeseId);
-            return View();
+            AddEditCheeseViewModel addEditCheeseViewModel = new AddEditCheeseViewModel
+            {
+                CheeseId = cheeseId
+            };
+
+            //Cheese cheeseToEdit = GetById(cheeseId);
+
+            return View(addEditCheeseViewModel);
         }
 
         [HttpPost]
@@ -71,13 +76,19 @@ namespace CheeseMVC.Controllers
         }
 
         [HttpPost]
-        [Route("/cheese/edit")]
-        public IActionResult EditCheese(int cheeseId, string name, string description)
+        public IActionResult Edit(AddEditCheeseViewModel addEditCheeseViewModel)
         {
-            Cheese cheeseToEdit = CheeseData.GetById(cheeseId);
-            cheeseToEdit.Name = name;
-            cheeseToEdit.Description = description;
-            return Redirect("/cheese");
+            if (ModelState.IsValid)
+            {
+                Cheese cheeseToEdit = CheeseData.GetById(addEditCheeseViewModel.CheeseToEdit.CheeseId);
+                cheeseToEdit.Name = addEditCheeseViewModel.Name;
+                cheeseToEdit.Description = addEditCheeseViewModel.Description;
+                cheeseToEdit.Type = addEditCheeseViewModel.Type;
+
+                return Redirect("/cheese");
+            }
+
+            return View(addEditCheeseViewModel);
         }
     }
 }
