@@ -51,7 +51,8 @@ namespace CheeseMVC.Controllers
                 {
                     Name = addCheeseViewModel.Name,
                     Description = addCheeseViewModel.Description,
-                    Type = addCheeseViewModel.Type
+                    Type = addCheeseViewModel.Type,
+                    Rating = addCheeseViewModel.Rating
                 };
 
                 //add the new cheese to my existing cheeses
@@ -84,6 +85,7 @@ namespace CheeseMVC.Controllers
                 cheeseToEdit.Name = addEditCheeseViewModel.Name;
                 cheeseToEdit.Description = addEditCheeseViewModel.Description;
                 cheeseToEdit.Type = addEditCheeseViewModel.Type;
+                cheeseToEdit.Rating = addEditCheeseViewModel.Rating;
 
                 return Redirect("/cheese");
             }

@@ -19,6 +19,10 @@
     <br />
     <select asp-for="Type" asp-items="Model.CheeseTypes" value="@Model.CheeseToEdit.Type"></select>
     <br />
+    <label asp-for="Rating"></label>
+    <br />
+    <input asp-for="Rating" value="@Model.CheeseToEdit.Rating" />
+    <br />
     <br />
     <input asp-for="CheeseId" type="hidden" value="@Model.CheeseToEdit.CheeseId" />
     <input type="submit" value="Edit Cheese" />

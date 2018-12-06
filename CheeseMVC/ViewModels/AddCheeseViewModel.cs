@@ -16,10 +16,14 @@ namespace CheeseMVC.ViewModels
 
         [Required(ErrorMessage = "You must give your cheese a description.")]
         public string Description { get; set; }
-
+        
         public CheeseType Type { get; set; }
 
         public List<SelectListItem> CheeseTypes { get; set; }
+
+        [Required(ErrorMessage ="Cheeses must be rated on a scale of 1 to 5.")]
+        [Range(1, 5)]
+        public int Rating { get; set; }
 
         public AddCheeseViewModel()
         {
